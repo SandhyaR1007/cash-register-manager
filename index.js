@@ -1,17 +1,28 @@
+let checkBtn = document.querySelector(".check-button");
+let errorDiv = document.querySelector("#error-div");
 const checkChange = () => {
-  document.getElementById("error-div").innerHTML = "";
+  errorDiv.innerHTML = "";
   let billAmount = document.querySelector(`input[name=bill-amount]`).value;
   let cashGiven = document.querySelector(`input[name=cash-given]`).value;
-
-  billAmount = parseFloat(billAmount);
-  cashGiven = parseFloat(cashGiven);
-  if (billAmount <= cashGiven) {
-    calculate(cashGiven - billAmount);
-  } else if (billAmount > cashGiven) {
-    document.getElementById("error-div").innerHTML =
-      "Do you wanna wash plates?";
+  if (billAmount == "" || cashGiven == "") {
+    errorDiv.style.color = "red";
+    errorDiv.innerHTML = "Please fill both the fields";
   } else {
-    document.getElementById("error-div").innerHTML = "Invalid Bill Amount";
+    billAmount = Number(billAmount);
+    cashGiven = Number(cashGiven);
+    if (billAmount < 0 || cashGiven < 0) {
+      errorDiv.style.color = "red";
+      errorDiv.innerHTML = "Please enter valid values";
+    } else if (billAmount <= cashGiven) {
+      errorDiv.style.color = "";
+      calculate(cashGiven - billAmount);
+    } else if (billAmount > cashGiven) {
+      errorDiv.style.color = "";
+      errorDiv.innerHTML = "Do you wanna wash plates?";
+    } else {
+      errorDiv.style.color = "red";
+      errorDiv.innerHTML = "Please enter valid values";
+    }
   }
 };
 
@@ -25,3 +36,5 @@ const calculate = (number) => {
     number = number % notes[i];
   }
 };
+
+checkBtn.addEventListener("click", checkChange);

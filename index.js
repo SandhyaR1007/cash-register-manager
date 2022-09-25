@@ -58,6 +58,7 @@ const handleNext = () => {
     nextBtn.style.display = "none";
     cashArea.forEach((ele) => (ele.style.display = "block"));
     checkBtn.style.display = "block";
+    errorDiv.innerHTML = "";
   }
 };
 nextBtn.addEventListener("click", handleNext);
